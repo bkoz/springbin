@@ -1,0 +1,6 @@
+#!/bin/bash
+#
+#
+# exec java -jar myapp.jar
+#
+echo ">>>>>>>>>>>>>>>>>> Need to exec java -jar here...."
