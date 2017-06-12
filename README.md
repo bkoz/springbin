@@ -1,9 +1,37 @@
-# Deploy a spring-boot jar using the redhat-openjdk18-openshift builder image.
+# Deploy a spring-boot jar to OpenShift 
 ## Overview
+This procedure uses the OpenShift's source to image workflow and the redhat-openjdk18-openshift builder image.
 
-Example to push a springboot jar using the redhat-openjdk18-openshift builder image.
+If you don't have the builder image, import the image stream into your project.
 
-Import the image stream into your project.
+```
+cat<<EOF>openjdk-s2i-imagestream.json
+{
+    "kind": "ImageStream",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "redhat-openjdk18-openshift"
+    },
+    "spec": {
+        "dockerImageRepository": "registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift",
+        "tags": [
+            {
+                "name": "1.0",
+                "annotations": {
+                    "description": "OpenJDK S2I images.",
+                    "iconClass": "icon-jboss",
+                    "tags": "builder,java,xpaas",
+                    "supports":"java:8,xpaas:1.0",
+                    "sampleRepo": "https://github.com/jboss-openshift/openshift-quickstarts",
+                    "sampleContextDir": "undertow-servlet",
+                    "version": "1.0"
+                }
+            }
+        ]
+    }
+}
+EOF
+```
 
 ```
 oc create -f openjdk-s2i-imagestream.json
