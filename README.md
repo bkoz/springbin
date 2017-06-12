@@ -4,6 +4,8 @@ This procedure uses the OpenShift's source to image workflow and the redhat-open
 
 If you don't have the builder image, import the image stream into your project.
 
+Create the ```image-stream``` object.
+
 ```
 cat<<EOF>openjdk-s2i-imagestream.json
 {
