@@ -35,6 +35,8 @@ cat<<EOF>openjdk-s2i-imagestream.json
 EOF
 ```
 
+Now create the image-stream.
+
 ```
 oc create -f openjdk-s2i-imagestream.json
 ```
