@@ -12,8 +12,7 @@ If you need an example SpringBoot jar, clone, compile and package the following 
 ```
 git clone https://github.com/redhat-helloworld-msa/ola.git
 cd ola
-mvn compile
-mvn package
+mvn clean package
 ```
 
 Now create a build config with a binary build strategy and push the jar. If you use your own jar, make sure it is located in the ```target``` directory.
@@ -28,7 +27,7 @@ oc new-app ola -l app=ola,hystrix.enabled=true
 oc expose service ola
 ```
 
-Wait for the pod to run and become ready then test it.
+Wait for the pod to become ready then test it.
 
 ```
 host=`oc get route ola --template={{.spec.host}}`
