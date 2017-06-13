@@ -2,7 +2,7 @@
 ## Overview
 This procedure uses the OpenShift's source to image workflow and the redhat-openjdk18-openshift builder image.
 
-If you don't have the openjdk18 builder image, create the ```image-stream``` object I obtained from Thomas's [blog post] (https://developers.redhat.com/blog/2017/02/23/getting-started-with-openshift-java-s2i/) and import it into your project.
+If you don't have the openjdk18 builder image, create the ```image-stream``` object I obtained from Thomas's [blog post](https://developers.redhat.com/blog/2017/02/23/getting-started-with-openshift-java-s2i/) and import it into your project.
 
 ```
 oc create -f openjdk-s2i-imagestream.json
