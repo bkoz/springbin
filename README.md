@@ -2,7 +2,7 @@
 ## Overview
 This procedure uses the OpenShift's source to image workflow and the redhat-openjdk18-openshift builder image.
 
-If you don't have the openjdk18 builder image, create an ```image-stream``` object and import it into your project.
+If you don't have the openjdk18 builder image, create the following [```image-stream``` ](https://gist.githubusercontent.com/tqvarnst/3ca512b01b7b7c1a1da0532939350e23/raw/3869a54c7dd960965f0e66907cdc3eba6d160cad/openjdk-s2i-imagestream.json) object and import it into your project.
 
 ```
 cat<<EOF>openjdk-s2i-imagestream.json
@@ -47,7 +47,7 @@ mvn compile
 mvn package
 ```
 
-Create a build config with a binary build strategy and push the jar. 
+Create a build config with a binary build strategy and push the jar. If you use your own jar, make sure it is located in the ```target``` directory.
 ```
 oc create -f openjdk-s2i-imagestream.json
 oc new-build --binary=true --name=ola --image-stream=redhat-openjdk18-openshift
