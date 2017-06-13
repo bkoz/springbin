@@ -1,6 +1,5 @@
-# Deploy a spring-boot binary (jar) to OpenShift 
-## Overview
-This procedure uses the OpenShift's source to image workflow and the redhat-openjdk18-openshift builder image.
+# Deploy a Spring Boot binary (jar) to OpenShift 
+This procedure uses OpenShift's source to image workflow and the [openjdk18](https://access.redhat.com/containers/?tab=images&platform=openshift#/registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift) builder image to push a local jar file into the OpenShift build configuration.
 
 If you don't have the openjdk18 builder image, create the ```image-stream``` object I obtained from Thomas's [blog post](https://developers.redhat.com/blog/2017/02/23/getting-started-with-openshift-java-s2i/) and import it into your project.
 
@@ -8,14 +7,14 @@ If you don't have the openjdk18 builder image, create the ```image-stream``` obj
 oc create -f openjdk-s2i-imagestream.json
 ```
 
-If you need an example SpringBoot jar, clone, compile and package the following example.
+If you need an example Spring Boot jar, clone, compile and package the following example.
 ```
 git clone https://github.com/redhat-helloworld-msa/ola.git
 cd ola
 mvn clean package
 ```
 
-Now create a build config with a binary build strategy and push the jar. If you use your own jar, make sure it is located in the ```target``` directory.
+Now create a build config with a binary build strategy and push the jar. If you want to push your own jar, make sure it is located in the ```target``` directory.
 ```
 oc create -f openjdk-s2i-imagestream.json
 oc new-build --binary=true --name=ola --image-stream=redhat-openjdk18-openshift
