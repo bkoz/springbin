@@ -2,9 +2,7 @@
 ## Overview
 This procedure uses the OpenShift's source to image workflow and the redhat-openjdk18-openshift builder image.
 
-If you don't have the builder image, import the image stream into your project.
-
-Create the ```image-stream``` object.
+If you don't have the openjdk18 builder image, create an ```image-stream``` object and import it into your project.
 
 ```
 cat<<EOF>openjdk-s2i-imagestream.json
@@ -35,36 +33,13 @@ cat<<EOF>openjdk-s2i-imagestream.json
 EOF
 ```
 
-Now create the image-stream.
+Create the image-stream.
 
 ```
 oc create -f openjdk-s2i-imagestream.json
 ```
 
-```
-oc new-build --binary=true --name=spring --image-stream=redhat-openjdk18-openshift
-oc env bc/spring -e JAVA_APP_DIR=/deployments -e JAVA_APP_JAR=ola.jar
-oc start-build spring --from-dir=. --follow
-oc start-build bc/spring --from-file=ola.jar --follow
-oc new-app spring
-```
-
-Building the ola sample swagger springboot app
-
-```
-git clone https://github.com/redhat-helloworld-msa/ola.git
-cd ola/
-mvn compile
-mvn package
-cd target/
-java -jar ola.jar
-```
-
-Try: 
-``` oc start-build spring --from-file=ola.jar --follow```
-
-
-Clone, compile and package the code.
+If you need a SpringBoot jar, clone, compile and package the following example.
 ```
 git clone https://github.com/redhat-helloworld-msa/ola.git
 cd ola
@@ -72,10 +47,13 @@ mvn compile
 mvn package
 ```
 
-Create image stream, build config, deployment config, service and route.
+Create a build config with a binary build strategy and push the jar. 
 ```
 oc create -f openjdk-s2i-imagestream.json
 oc new-build --binary=true --name=ola --image-stream=redhat-openjdk18-openshift
+```
+Next, create a deployment config, a service and a route.
+```
 oc start-build ola --from-dir=target --follow
 oc new-app ola -l app=ola,hystrix.enabled=true
 oc expose service ola
