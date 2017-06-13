@@ -2,44 +2,13 @@
 ## Overview
 This procedure uses the OpenShift's source to image workflow and the redhat-openjdk18-openshift builder image.
 
-If you don't have the openjdk18 builder image, create the following [```image-stream``` ](https://gist.githubusercontent.com/tqvarnst/3ca512b01b7b7c1a1da0532939350e23/raw/3869a54c7dd960965f0e66907cdc3eba6d160cad/openjdk-s2i-imagestream.json) object and import it into your project.
-
-```
-cat<<EOF>openjdk-s2i-imagestream.json
-{
-    "kind": "ImageStream",
-    "apiVersion": "v1",
-    "metadata": {
-        "name": "redhat-openjdk18-openshift"
-    },
-    "spec": {
-        "dockerImageRepository": "registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift",
-        "tags": [
-            {
-                "name": "1.0",
-                "annotations": {
-                    "description": "OpenJDK S2I images.",
-                    "iconClass": "icon-jboss",
-                    "tags": "builder,java,xpaas",
-                    "supports":"java:8,xpaas:1.0",
-                    "sampleRepo": "https://github.com/jboss-openshift/openshift-quickstarts",
-                    "sampleContextDir": "undertow-servlet",
-                    "version": "1.0"
-                }
-            }
-        ]
-    }
-}
-EOF
-```
-
-Create the image-stream.
+If you don't have the openjdk18 builder image, create the ```image-stream``` object I obtained from Thomas's [blog post] (https://developers.redhat.com/blog/2017/02/23/getting-started-with-openshift-java-s2i/) and import it into your project.
 
 ```
 oc create -f openjdk-s2i-imagestream.json
 ```
 
-If you need a SpringBoot jar, clone, compile and package the following example.
+If you need an example SpringBoot jar, clone, compile and package the following example.
 ```
 git clone https://github.com/redhat-helloworld-msa/ola.git
 cd ola
@@ -47,7 +16,7 @@ mvn compile
 mvn package
 ```
 
-Create a build config with a binary build strategy and push the jar. If you use your own jar, make sure it is located in the ```target``` directory.
+Now create a build config with a binary build strategy and push the jar. If you use your own jar, make sure it is located in the ```target``` directory.
 ```
 oc create -f openjdk-s2i-imagestream.json
 oc new-build --binary=true --name=ola --image-stream=redhat-openjdk18-openshift
