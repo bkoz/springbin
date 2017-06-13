@@ -1,4 +1,4 @@
-# Deploy a spring-boot jar to OpenShift 
+# Deploy a spring-boot binary (jar) to OpenShift 
 ## Overview
 This procedure uses the OpenShift's source to image workflow and the redhat-openjdk18-openshift builder image.
 
