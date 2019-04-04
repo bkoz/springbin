@@ -38,3 +38,5 @@ Optionally, add a readiness probe.
 oc env dc/ola AB_ENABLED=jolokia; oc patch dc/ola -p '{"spec":{"template":{"spec":{"containers":[{"name":"ola","ports":[{"containerPort": 8778,"name":"jolokia"}]}]}}}}'
 oc set probe dc/ola --readiness --get-url=http://:8080/api/health
 ```
+[Reference](https://github.com/redhat-helloworld-msa/helloworld-msa/blob/master/ola.adoc)
+
