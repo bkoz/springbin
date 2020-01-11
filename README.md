@@ -8,8 +8,12 @@ Grab ```odo``` from https://mirror.openshift.com/pub/openshift-v4/clients/odo/
 odo project create myproj
 odo create java backend --binary targets/ola.jar
 odo push
-odo log
 odo url create --port 8080
+odo log
+```
+Wait for the microservice to become ready.
+```
+INFO 135 --- [           main] c.r.developers.msa.ola.OlaApplication    : Started OlaApplication in 49.901 seconds (JVM running for 55.196)
 ```
 
 Cleanup from ```odo```
