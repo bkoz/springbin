@@ -1,4 +1,32 @@
 # Deploy a Spring Boot binary (jar) to OpenShift 
+
+### Using the odo client
+
+Grab ```odo``` from https://mirror.openshift.com/pub/openshift-v4/clients/odo/
+
+```
+odo project create myproj
+odo create java backend --binary targets/ola.jar
+odo push
+odo log
+odo url create --port 8080
+```
+
+Cleanup from ```odo```
+
+Delete from server.
+```
+odo delete backend
+```
+Delete from server and local.
+```
+odo delete --app backend --all
+``` 
+Delete the project.
+```
+odo delete project myproj
+```
+### Using the oc client
 This procedure uses OpenShift's source to image workflow and the [openjdk18](https://access.redhat.com/containers/?tab=images&platform=openshift#/registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift) builder image to push a local jar file into the OpenShift build configuration.
 
 If you don't have the openjdk18 builder image, create the ```image-stream``` object I obtained from Thomas's [blog post](https://developers.redhat.com/blog/2017/02/23/getting-started-with-openshift-java-s2i/) and import it into your project.
